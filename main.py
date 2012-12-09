@@ -39,7 +39,7 @@ print "O> Salut !"
 
 # GUI
 while(not termine and not Onolen.Termine):
-    print(GUI_MainMenu);
+    print(GUI_MainMenu)
     rep = captureEntier()
     # Message
     if(rep == 1): 
