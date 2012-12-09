@@ -1,0 +1,100 @@
+# Onolen 
+
+## Présentation
+Il entretiens une fiche sur chaque personne croisée sur le chan irc.
+Lorsqu'il se passe un certain temps alors que personne ne parle, Onolen va  engager la discussion avec quelqu'un pour essayer de compléter sa fiche.
+Onolen n'a qu'un but : remplir ses fiches.
+Il vas donc écouter les gens parler, essayer d'isoler des connaissances, (demander précisions au besoin), et engagera la discussion pour tenter 
+    d'obtenir des renseignements précis.
+Sa base de donnée lui permettra de rendre service : on pourras  par exemple lui demander de transmettre un message 
+    à une autre personne dés qu'elle se connectera.
+Il entretiens également une liste des utilisateus connectés. 
+    Lorsqu'un utilisateur se connecte, Onolen le salut, et le renseigne sur le sujet de discussion actuel, si il y en un. 
+	Onolen saluera différemment si l'utilisateur fait partie de la liste des visiteurs du jour (vidée à minuit ou au réveil d'Onolen) ou non.
+    Lorsqu'un utilisateur quitte le chat, Onolen le retire de la liste des connectés, et le place dans la liste des visiteurs du jour.
+    Lorsqu'Onolen se connecte, il salut les utilisateurs déjà connectés.
+
+En outre, Onolen peut fournir un sujet de discussion. Il en possède plusieurs, chacun d'en eux ayant un index.
+Cet index est utilisé pour stocker facilement les sujets de discussion bloqués par les utilisateurs.
+Ainsi, lorsque l'on demande à Onolen un sujet de discussion, il donne le premier sujet indexé, ou le suivant si le premier à été 
+    bloqué par un utilisateur actuellement présent.
+Onolen ne prend pas part aux discussions, il ne fait que les proposer.
+Il peut également fournir des pistes de réflexions.
+Les sujets sont des objets, enregistrés dans des fichiers précis (1 fichier = 1 sujet)
+
+Dans la série des options inutiles, Onolen considère :
+- l'affiliation à la banane ou au kiwi (dans les fiches)
+    - en lien avec cela, il cherchera à connaître, pour chaque utilisateur, s'il est banane ou kiwi.
+	- lorsqu'un utilisateur se connecte ou se déconnecte, il incrémentera ou décrémentera un compteur, (un compteur pour les banane, un compteur pour les kiwi)
+	- il annoncera alors si la canal est plus banane ou kiwi.
+
+
+Causer avec Onolen est possible. Il attend ses réponses sous cette forme :
+Onolen: <format>
+le format dépend de sa question précédente, ou, si il n'y en a pas eu, Onolen tente d'interpréter selon quelques commandes précises.
+- ajout/modif d'une valeur de la fiche de l'utilisateur ("je suis kiwi", ou "mon nom est raoul", par exemple)
+- message à transmettre à un autre utilisateur.
+- discussion
+    - nouveau sujet de discussion.
+    - blocage de sujet de discussion.
+    - demande de pistes de réflexion.
+
+
+## données techniques
+bot irc codé en python 2.7, à l'aide de quelques modules
+- irclib et ircbot pour la gestion de l'IRC
+- (c)pickle pour enregistrement et chargement de structures de données.
+
+
+
+
+## Structures de données
+
+fiche: (une fiche par utilisateur)
+- pseudo (chaîne)
+- noms réel (chaîne)
+- date de naissance (date)
+- anniversaire souhaité (booléen, mit à vrai quand l'anniversaire est souhaité cette année)
+- Homme ou femme ? (parmis homme, femme, inconnu, robot masculin, robot féminin)
+- banane ou kiwi ? (parmis : kiwi, banane, indécis)
+- messages à transmettre (dictionnaire (clef = expéditeur, valeur = message))
+- sujets de discussion bloqués (liste d'entiers)
+
+
+sujet de discussion:
+- intitulé (chaîne)
+- pistes (liste de chaînes)
+- numéro d'index (entier)
+
+
+visiteursDuJour:
+- pseudos (liste de chaînes, liste des utilisateurs connectés aujourd'hui, vidée à minuit ou à la première connexion du jour d'Onolen)
+
+
+## Réactions
+- arrivée d'un nouvel utilisateur.
+    - Si c'est Onolen lui-même, il salut l'assemblée.
+    - Sinon, il salut l'arrivant (prise en compte du sexe, d'un éventuel anniversaire).
+    - En fonction de ce qu'il sait sur l'arrivant, Onolen incrémentera le compteur banane, kiwi, ou indécis.
+	- Si le canal passe sous le lead d'un autre compteur, Onolen l'annonce. (indécis leader si banane == kiwi)
+- un utilisateur quitte le canal (pas Onolen).
+- un message public est envoyé par \0, dirigé vers Onolen. (msg = message, sans "Onolen: " devant)
+    - Si msg = "dis à \([^\ ]\*\) que \(.\*\)"
+	- Si \1 est connu, alors ajouter dans sa messagerie la valeur \2 pour la clef \0.
+	- Sinon, le faire savoir
+    - Si msg = "lances ([0-9]+d[0-9]+\ ?)+"
+	- On appelle le module lanceDes, qui lancera les dés demandés par l'utilisateur, et affichera résultats et sommes totales
+    - Si msg = "Blague !"
+	- On envoit une blague grâce à la fonction getBlague de system
+- un message privé est envoyé, pour Onolen.
+
+
+
+
+
+
+## Timers
+Quelques timers à prendre en compte.
+- la première fois qu'Onolen se connecte dans une année, il remet tous les booléens "anniversaire souhaités" de ses fiches à faux.
+- la première fois qu'il se connecte dans une journée, il vide la liste des visiteurs du jour
+- toutes les ONOLEN\_Patience en moyenne (variation de ONOLEN\_Patience/2), la méthode de reflexion se rappelle

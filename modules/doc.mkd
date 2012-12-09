@@ -1,0 +1,9 @@
+# DOCUMENTATION
+Documentation des modules de ce dossier
+
+
+## INSULTE
+Ce module permet de générer des insultes dédiées
+
+from insulte import insulter
+print insulter("Personne en particulier")
