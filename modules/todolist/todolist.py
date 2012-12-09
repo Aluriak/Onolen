@@ -15,9 +15,8 @@ from modules.system.system import *
 # Gestion d'une TODOliste. Commandes à adresser :
 #       - todo, pour afficher les entrées et leurs index
 #       - todo add <intitulé>, pour ajouter l'entrée indiquée
-#       - todo check <id>, pour dire que l'entrée d'index id à été faite
+#       - todo check <id>, pour dire que l'entrée d'index id a été faite
 #       - todo clean, pour retirer toutes les entrées checkées
-#       - todo clean all, pour retirer toutes les entrées, checkées ou non
 #       - todo cut <id> <intitulé>/<intitulé> pour découper l'entrée 
 #               d'index id en deux autres entrées, 
 #               d'intitulés séparés par des virgules.
@@ -25,7 +24,7 @@ from modules.system.system import *
 # Pour chaque entrée, on enregistre : 
 #       - intitulé
 #       - auteur
-#       - bool checked (vrai si checkée)
+#       - bool isChecked (vrai si checkée)
 #       - id
 
 
@@ -54,7 +53,7 @@ class todoList():
             for e in self.entree:
                 chaine = "\t"+str(e.ID)+". "+e.intitule+" ("+e.auteur+")"
                 if e.isChecked:
-                    chaine += " [CHECKED]"
+                    chaine = chaine + " [CHECKED]"
                 listeRetour.append(chaine)
             # si la liste est vide, on l'indique
             if listeRetour == []:
@@ -73,6 +72,7 @@ class todoList():
             if self.supprimerID(int(result[0])):
                 listeRetour.append("Entrée d'id "+result[0]+\
                                    " supprimée")
+
         # Découpage d'une entrée
         elif REG_TODOL_CUT.search(directive):
             result = REG_TODOL_CUT.findall(directive)
@@ -89,6 +89,32 @@ class todoList():
                     self.add(entreeB, auteur) 
                     listeRetour.append("Entrée d'id "+str(idACouper)+" coupée")
             
+
+        # Check d'une entrée
+        elif REG_TODOL_CHECK.search(directive):
+            result = int(REG_TODOL_CHECK.findall(directive)[0])
+            for e in self.entree:
+                if(e.ID == result):
+                    self.check(e)
+                    listeRetour.append("Entrée d'id "+str(result)+\
+                                       " checkée")
+
+
+        # Uncheck d'une entrée
+        elif REG_TODOL_UNCHECK.search(directive):
+            result = int(REG_TODOL_UNCHECK.findall(directive)[0])
+            for e in self.entree:
+                if(e.ID == result):
+                    self.check(e, False)
+                    listeRetour.append("Entrée d'id "+str(result)+\
+                                       " uncheckée")
+
+
+        # Clear, suppression des entrées checkées
+        elif REG_TODOL_CLEAR.search(directive):
+            self.clean()
+            listeRetour.append("Entrées checkées supprimées")
+
 
         # Merge de deux entrées
         elif REG_TODOL_MERGE.search(directive):
@@ -121,15 +147,15 @@ class todoList():
         self.IDLibre += 1 # id suivant
 
     # check l'entree demandée, ou la remet en normal si demandé explicitement
-    def check(self, entree, uncheck = False):
-        entree.checked = not unckeck
+    def check(self, entree, check = True):
+        entree.isChecked = check
 
     # Retire toutes les entrées checkées
     def clean(self):
         interListe = [] # liste intermédiaire
         for i in self.entree:
             # si l'entree n'est pas checkée, on la met dans l'intermédiaire
-            if not i.checked:
+            if not i.isChecked:
                 interListe.append(i)
         # on utilise maintenant l'interListe
         self.entree = interListe
@@ -147,3 +173,7 @@ class todoList():
                 suppressionEffectuee = True
             it += 1
         return suppressionEffectuee
+
+
+
+

@@ -85,11 +85,13 @@ REG_MSG_REC = re.compile(r"[dD]is\ +(à|a)\ +([^\ ]+)\ +que\ +(.+)")
 REG_DICE = re.compile(r"(([0-9]+)d([0-9]+))+") # jouer des dés (1d2 3d8 6d1)
 # Todo Liste
 REG_TODOL_AFF = re.compile(r"todo +aff.*") # afficher une entrée
-REG_TODOL_ADD = re.compile(r"todo +add +(.+)") # ajouter une entrée à la todol
-REG_TODOL_DEL = re.compile(r"todo +del +([0-9]+)") # supprime une entrée
-REG_TODOL_CHECK = re.compile(r"todo +check +([0-9]+)") # checker une entrée
-REG_TODOL_CUT = re.compile(r"todo +cut +([0-9]+) +([^/]+)/([^/]+)") 
-REG_TODOL_MERGE = re.compile(r"todo +merge +(.*)/ *([0-9]+) */ *([0-9]+)")
+REG_TODOL_ADD = re.compile(r"todo +add +(.+) +") # ajouter une entrée à la todol
+REG_TODOL_DEL = re.compile(r"todo +del +([0-9]+) +") # supprime une entrée
+REG_TODOL_CHECK = re.compile(r"todo +check +([0-9]+) +") # checker une entrée
+REG_TODOL_UNCHECK = re.compile(r"todo +uncheck +([0-9]+) +") # unchecker 
+REG_TODOL_CUT = re.compile(r"todo +cut +([0-9]+) +([^/]+)/([^/]+) +") 
+REG_TODOL_MERGE = re.compile(r"todo +merge +(.*)/ *([0-9]+) */ *([0-9]+) +")
+REG_TODOL_CLEAR = re.compile(r"todo +clear +")
 # RACCOURCIS DE COMMANDES
 COM_QUIT_r = "gododo"
 
