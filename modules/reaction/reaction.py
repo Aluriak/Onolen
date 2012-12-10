@@ -74,7 +74,7 @@ class Onolen_Reaction(ircbot.SingleServerIRCBot):
         auteur = irclib.nm_to_n(ev.source())
         message = ev.arguments()[0]
         canal = ev.target()
-        self.rapport("O> Message public de "+auteur+": \""+message+"\"\n?>")
+        self.rapport(auteur+": "+message+"\n")
         self.priseEnCompte(auteur) # procédure de rise en compte de l'auteur
         # passage en sudo de la commande si demandé par le maître
         sudo = auteur == ONOLEN_Master
@@ -221,6 +221,7 @@ class Onolen_Reaction(ircbot.SingleServerIRCBot):
             message = BDD_getInterjection()+", "+message
         # Envois du message, modifié ou non
         self.Onolen.sendMessage(message)
+        self.rapport("Onolen: "+message+"\n")
 
 
     # Effectue vérifications et calculs pour gérer la demande de message 
