@@ -99,6 +99,7 @@ COM_QUIT_r = "gododo"
 FILE_ERR = "erreur.txt"
 FILE_OUT = "log"
 FILE_FICHE = "fiches/fiches" # contient les fiches de personnes
+FILE_TODOL = "modules/todolist/todolistSave"
 
 # Indications de canal
 CANAL_LeadKiwi = "Le Gwand Kiwi est leader du canal !"

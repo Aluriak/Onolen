@@ -62,7 +62,7 @@ def getFiches():
     except:
         FLUX_ERREUR("Personne.getFiches(0): erreur d'ouverture de FILE_FICHE") 
         return fiches
-    # écriture avec pickle
+    # lecture avec pickle
     fiches = pickle.load(fileFiches)
     fileFiches.close()
     # on retourne le dictionnaire de fiches

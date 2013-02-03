@@ -44,7 +44,7 @@ class Onolen_Reaction(ircbot.SingleServerIRCBot):
         self.chan = NET_Chan
         self.listeUsers = {} # clef = user; valeur = bool(vrai si user actif)
         self.fiche = getFiches() # on récupère le dico de Fiches
-        self.todol = todoList() # todo liste
+        self.todol = todoList.charger()
         # en attente si Onolen l'a questionné et qu'il n'a pas encore répondu
         self.Onolen = Onolen
         # connection/création du programme de bot
@@ -135,7 +135,9 @@ class Onolen_Reaction(ircbot.SingleServerIRCBot):
         # récupération des données importantes
         auteur = irclib.nm_to_n(ev.source())
         message = ev.arguments()[0]
-        self.rapport("O> Message privé reçu de "+auteur+": \""+message+"\"\n?>")
+        result = "O> Message privé reçu de "+auteur+": \""+message+"\"\n?>"
+        self.rapport(result)
+        print result
 
 
     # nouvel arrivant sur le canal
@@ -279,6 +281,7 @@ class Onolen_Reaction(ircbot.SingleServerIRCBot):
                          " le "+time.ctime(time.time()))
             # on enregistre les nouvelles fiches
             setFiches(self.fiche)
+            self.todol.enregistrer()
             # dernière action, et fin du script
             if not self.DEBUG:
                 goodbye = str(self.auRevoir(BDD_getNomAssemblee()))

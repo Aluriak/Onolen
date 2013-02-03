@@ -176,4 +176,35 @@ class todoList():
 
 
 
+    # Enregistre la todolist
+    def enregistrer(self):
+        try:
+            fileTodol = open(FILE_TODOL, "w")
+        except:
+            FLUX_ERREUR("todoList.sauvegarder(1): erreur d'ouverture de FILE_TODOL") 
+            return
+        # écriture avec pickle
+        pickle.dump(self, fileTodol)
+        # et fermeture
+        fileTodol.close()
+
+
+    @staticmethod
+    def charger():
+        # todolist vide
+        todol = todoList()
+        # on tente d'ouvrir le fichier et de charger le dictionnaire de fiches
+        try:
+            fileTodol = open(FILE_TODOL, "r")
+        except:
+            FLUX_ERREUR("todoList.charger(0): erreur d'ouverture de FILE_TODOL") 
+            return todol
+        # lecture avec pickle
+        todolC = pickle.load(fileTodol)
+        fileTodol.close()
+        # on retourne le dictionnaire de fiches
+        return todolC
+
+
+
 

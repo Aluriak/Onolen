@@ -4,6 +4,7 @@
 # IMPORTS
 #
 from modules.system.system import *
+from modules.todolist.todolist import *
 from modules.personne.Personne import *
 from fctAnnexes import *
 # module pickle : pour enregistrer rapidement des structure de données dans des fichiers
@@ -52,8 +53,8 @@ Menu = """1. Reinitialiser Fiches
 #
 # MAIN
 #
-termine = False
 if __name__ == "__main__":
+    termine = False
     # GUI
     while(not termine):
         print Menu
