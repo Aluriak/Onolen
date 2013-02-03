@@ -119,9 +119,9 @@ class todoList():
         # Merge de deux entrées
         elif REG_TODOL_MERGE.search(directive):
             result = REG_TODOL_MERGE.findall(directive)
-            entreeMergee = result[0][0] # intitulé du merge
-            idAMergerA = int(result[0][1]) # id de la première entrée à merger
-            idAMergerB = int(result[0][2]) # id de la seconde
+            idAMergerA = int(result[0][0]) # id de la première entrée à merger
+            idAMergerB = int(result[0][1]) # id de la seconde
+            entreeMergee = result[0][2] # intitulé du merge
             # parcours des entrées jusqu'à trouver l'id de la première entrée
             for e in self.entree:
                 # on modifie l'entrée ciblée

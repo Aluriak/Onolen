@@ -4,7 +4,7 @@ p1
 (dp2
 S'IDLibre'
 p3
-I1
+I7
 sS'entree'
 p4
 (lp5
@@ -14,7 +14,7 @@ p6
 (dp7
 S'intitule'
 p8
-S'plouf'
+S"Se f\xc3\xa9liciter d'avoir eu le courage de faire la sauvegarde de todolist"
 p9
 sS'isChecked'
 p10
@@ -25,5 +25,75 @@ S'aluriak'
 p12
 sS'ID'
 p13
-I0
+I1
+sba(imodules.todolist.todolist
+todoEntree
+p14
+(dp15
+g8
+S'apprendre le bottle'
+p16
+sg10
+I00
+sg11
+S'aluriak'
+p17
+sg13
+I2
+sba(imodules.todolist.todolist
+todoEntree
+p18
+(dp19
+g8
+S'apprendre le processing'
+p20
+sg10
+I00
+sg11
+S'aluriak'
+p21
+sg13
+I3
+sba(imodules.todolist.todolist
+todoEntree
+p22
+(dp23
+g8
+S'remplir cette todo list astucieusement'
+p24
+sg10
+I00
+sg11
+S'aluriak'
+p25
+sg13
+I4
+sba(imodules.todolist.todolist
+todoEntree
+p26
+(dp27
+g8
+S"feliciter aluriak d'avoir fait l'enregistrement de la todolist"
+p28
+sg10
+I01
+sg11
+S'jblb'
+p29
+sg13
+I5
+sba(imodules.todolist.todolist
+todoEntree
+p30
+(dp31
+g8
+S'demander a ton papa comment on check une entre'
+p32
+sg10
+I01
+sg11
+S'jblb'
+p33
+sg13
+I6
 sbasb.
