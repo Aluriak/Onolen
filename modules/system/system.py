@@ -94,6 +94,8 @@ REG_TODOL_MERGE = re.compile(r"todo +merge +([0-9]+) +([0-9]+) (.*)")
 REG_TODOL_CLEAR = re.compile(r"todo +clea(r|n) *")
 # RACCOURCIS DE COMMANDES
 COM_QUIT_r = "gododo"
+# SED
+REG_SED = re.compile(r"s/([^/]+)/([^/]*)/?")
 
 # Fichiers
 FILE_ERR = "erreur.txt"
