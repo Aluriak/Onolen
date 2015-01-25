@@ -1,4 +1,6 @@
 # Onolen 
+Looking for an IRC bot in python, easily extendable ?
+[Munin](https://github.com/Aluriak/munin) is maybe what you are looking for !
 
 ## Présentation
 Il entretiens une fiche sur chaque personne croisée sur le chan irc.
